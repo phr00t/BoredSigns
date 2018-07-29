@@ -1,7 +1,7 @@
 package com.zacharee1.boredsigns.services
 
 import android.Manifest
-import android.annotation.RequiresPermission
+import android.support.annotation.RequiresPermission
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -20,7 +20,7 @@ import android.widget.Toast
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.zacharee1.boredsigns.LicenseManager
+//import com.zacharee1.boredsigns.LicenseManager
 import com.zacharee1.boredsigns.R
 import com.zacharee1.boredsigns.util.Utils
 import com.zacharee1.boredsigns.widgets.WeatherForecastWidget
@@ -49,7 +49,7 @@ import kotlin.collections.ArrayList
 class WeatherService : Service() {
     companion object {
         const val ACTION_UPDATE_WEATHER = "com.zacharee1.boredsigns.action.UPDATE_WEATHER"
-        const val API_KEY = LicenseManager.API_KEY //IMPORTANT: Use your own OWM API key here when building for yourself!
+        const val API_KEY = "null"; //LicenseManager.API_KEY //IMPORTANT: Use your own OWM API key here when building for yourself!
 
         const val EXTRA_TEMP = "temp"
         const val EXTRA_TEMP_EX = "temp_ex"

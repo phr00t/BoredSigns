@@ -55,8 +55,9 @@ class NavBarAccessibility : AccessibilityService() {
                 POWER -> performGlobalAction(GLOBAL_ACTION_POWER_DIALOG)
 
                 ASSIST -> {
-                    val searchMan = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-                    searchMan.launchAssist(null)
+                    // why is launchAssist unresolved..?
+                    //val searchMan = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+                    //searchMan.launchAssist(null)
                 }
             }
         }

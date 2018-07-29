@@ -15,7 +15,7 @@ class App : Application() {
     /**
      * THIS NEEDS TO BE REMOVED FOR THE APP TO BUILD
      */
-    private lateinit var licenseManager: LicenseManager
+    //private lateinit var licenseManager: LicenseManager
 
     override fun onCreate() {
         super.onCreate()
@@ -26,7 +26,7 @@ class App : Application() {
         }
         FirebaseMessaging.getInstance().subscribeToTopic(NEWS)
 
-        licenseManager = LicenseManager(this)
-        licenseManager.checkPiracy()
+        //licenseManager = LicenseManager(this)
+        //licenseManager.checkPiracy()
     }
 }
