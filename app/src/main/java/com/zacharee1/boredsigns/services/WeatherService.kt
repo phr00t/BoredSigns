@@ -49,7 +49,7 @@ import kotlin.collections.ArrayList
 class WeatherService : Service() {
     companion object {
         const val ACTION_UPDATE_WEATHER = "com.zacharee1.boredsigns.action.UPDATE_WEATHER"
-        const val API_KEY = "null"; //LicenseManager.API_KEY //IMPORTANT: Use your own OWM API key here when building for yourself!
+        const val API_KEY = "abff44d0c0871ad86f7c042d6e2606df"; // please don't use/abuse this one outside of this app
 
         const val EXTRA_TEMP = "temp"
         const val EXTRA_TEMP_EX = "temp_ex"
