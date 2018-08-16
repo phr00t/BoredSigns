@@ -10,10 +10,11 @@ class InfoProxy : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent = Intent(this, ConfigActivity::class.java)
+	// don't open config
+        /*val intent = Intent(this, ConfigActivity::class.java)
         intent.putExtra(ConfigActivity.SB_TYPE, ConfigActivity.INFO)
 
-        startActivity(intent)
+        startActivity(intent)*/
         finish()
     }
 }

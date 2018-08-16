@@ -49,7 +49,7 @@ import kotlin.collections.ArrayList
 class WeatherService : Service() {
     companion object {
         const val ACTION_UPDATE_WEATHER = "com.zacharee1.boredsigns.action.UPDATE_WEATHER"
-        const val API_KEY = "abff44d0c0871ad86f7c042d6e2606df"; // please don't use/abuse this one outside of this app
+        const val API_KEY = ""; // i don't have a non-free key...
 
         const val EXTRA_TEMP = "temp"
         const val EXTRA_TEMP_EX = "temp_ex"
@@ -192,7 +192,8 @@ class WeatherService : Service() {
 
     @RequiresPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     private fun getCurrentLocWeather() {
-        try {
+        if( API_KEY == "" ) return;
+	try {
             locClient?.lastLocation?.addOnCompleteListener {
                 it.result?.let {
                     val lat = it.latitude
@@ -225,6 +226,7 @@ class WeatherService : Service() {
     }
 
     private fun getWeather(lat: Double, lon: Double) {
+	if( API_KEY == "" ) return;
         try {
             val geo = Geocoder(applicationContext, Locale.getDefault())
             val weather = WeatherMap(applicationContext, API_KEY)

@@ -96,6 +96,7 @@ class InfoWidget : AppWidgetProvider() {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context)
     }
 
+    private val shown = mutableListOf<String?>()
     override fun onReceive(context: Context, intent: Intent?) {
         val rank = intent?.getBooleanExtra(InfoService.RANKING_LIST, false)
 
@@ -103,6 +104,7 @@ class InfoWidget : AppWidgetProvider() {
                 if (mOldRanking == null || !Arrays.equals(mOldRanking?.orderedKeys, it.orderedKeys)) {
                     mOldRanking = it
                     mRankedNotifs.clear()
+                    shown.clear()
 
                     for (ranking in it.orderedKeys) {
                         val index = it.orderedKeys.indexOf(ranking)
@@ -112,14 +114,19 @@ class InfoWidget : AppWidgetProvider() {
                                 val rankInfo: NotificationListenerService.Ranking = NotificationListenerService.Ranking()
                                 it.getRanking(ranking, rankInfo)
 
-                                val notif = notifs[index]
-
+                                val notif: StatusBarNotification? = notifs[index]
                                 val state = NotificationState(context, notif, rankInfo)
 
-                                state.icon = notif?.notification?.smallIcon?.loadDrawable(context)
+                                if(state.show) {
+                                    val packName: String? = notif?.packageName
 
-                                if (state.show) {
-                                    mRankedNotifs.add(state)
+                                    if( !shown.contains(packName) ) {
+                                        shown.add(packName)
+
+                                        state.icon = notif?.notification?.smallIcon?.loadDrawable(context)
+
+                                        mRankedNotifs.add(state)
+                                    }
                                 }
                             }
                         }
