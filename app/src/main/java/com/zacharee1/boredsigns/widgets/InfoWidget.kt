@@ -114,19 +114,23 @@ class InfoWidget : AppWidgetProvider() {
                                 val rankInfo: NotificationListenerService.Ranking = NotificationListenerService.Ranking()
                                 it.getRanking(ranking, rankInfo)
 
-                                val notif: StatusBarNotification? = notifs[index]
-                                val state = NotificationState(context, notif, rankInfo)
+                                try {
+                                    val notif: StatusBarNotification? = notifs[index]
+                                    val state = NotificationState(context, notif, rankInfo)
 
-                                if(state.show) {
-                                    val packName: String? = notif?.packageName
+                                    if (state.show) {
+                                        val packName: String? = notif?.packageName
 
-                                    if( !shown.contains(packName) ) {
-                                        shown.add(packName)
+                                        if (packName.isNullOrEmpty() || packName?.toLowerCase()?.contains("boredsigns") == false && !shown.contains(packName)) {
+                                            if( !packName.isNullOrEmpty() ) shown.add(packName)
 
-                                        state.icon = notif?.notification?.smallIcon?.loadDrawable(context)
+                                            state.icon = notif?.notification?.smallIcon?.loadDrawable(context)
 
-                                        mRankedNotifs.add(state)
+                                            mRankedNotifs.add(state)
+                                        }
                                     }
+                                } catch(e: Exception) {
+                                    // meh, just try the next notification
                                 }
                             }
                         }
@@ -484,7 +488,7 @@ class InfoWidget : AppWidgetProvider() {
                 icon = notification?.notification?.smallIcon?.loadDrawable(context)
             } catch (e: PackageManager.NameNotFoundException) {
                 val bundle = Bundle()
-                bundle.putString("message", e.localizedMessage)
+                //bundle.putString("message", e.localizedMessage)
                 bundle.putString("stacktrace", Arrays.toString(e.stackTrace))
                 bundle.putString("package", notification?.packageName)
                 FirebaseAnalytics.getInstance(context).logEvent("info_widget_package_error", bundle)
