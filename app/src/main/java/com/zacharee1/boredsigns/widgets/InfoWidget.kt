@@ -81,9 +81,9 @@ class InfoWidget : AppWidgetProvider() {
         try {
             updateBattery(views, context)
             updateClock(views)
-            updateMobile(views, context, appWidgetManager, appWidgetIds)
-            updateWifi(views, context)
             updateNotifications(views)
+            updateWifi(views, context)
+            updateMobile(views, context, appWidgetManager, appWidgetIds)
         } catch (e: Exception) {}
 
         // Instruct the widget manager to update the widget
@@ -240,22 +240,24 @@ class InfoWidget : AppWidgetProvider() {
 
             val hasSim = telephony.simState != TelephonyManager.SIM_STATE_ABSENT
 
-            val info = telephony.allCellInfo[0]
-            if (info is CellInfoGsm) {
-                level = info.cellSignalStrength.level
-                connected = info.isRegistered
-            }
-            if (info is CellInfoCdma) {
-                level = info.cellSignalStrength.level
-                connected = info.isRegistered
-            }
-            if (info is CellInfoWcdma) {
-                level = info.cellSignalStrength.level
-                connected = info.isRegistered
-            }
-            if (info is CellInfoLte) {
-                level = info.cellSignalStrength.level
-                connected = info.isRegistered
+            if( telephony?.allCellInfo != null && !telephony.allCellInfo.isEmpty() && telephony.allCellInfo[0] != null ) {
+                val info = telephony.allCellInfo[0]
+                if (info is CellInfoGsm) {
+                    level = info.cellSignalStrength.level
+                    connected = info.isRegistered
+                }
+                if (info is CellInfoCdma) {
+                    level = info.cellSignalStrength.level
+                    connected = info.isRegistered
+                }
+                if (info is CellInfoWcdma) {
+                    level = info.cellSignalStrength.level
+                    connected = info.isRegistered
+                }
+                if (info is CellInfoLte) {
+                    level = info.cellSignalStrength.level
+                    connected = info.isRegistered
+                }
             }
 
             telephony.listen(object : PhoneStateListener() {
